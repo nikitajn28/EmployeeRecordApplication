@@ -11,30 +11,46 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name="Employee")
+@ApiModel("Employee")
 public class Employee {
 
 @Id
 @Column(name = "ID")
 @GeneratedValue(strategy = GenerationType.AUTO)
+@ApiModelProperty("The database generated product ID")
+
 private Long Id;
+
 @Column(name="FIRSTNAME")
+@ApiModelProperty("First Name of Employee")
 private String firstName;
 
 @Column(name="LASTNAME")
+@ApiModelProperty("Last Name of Employee")
+
 private String lastName;
 
 @Column(name="DEPARTMENT")
+@ApiModelProperty("Deparment Name of Employee")
 private String department;
 
 @Column(name="SALARY")
+@ApiModelProperty("Salary Name of Employee")
+
 private BigDecimal salary;
 
 @Column(name="STARTDATE")
+@ApiModelProperty("Start date of Employee")
 private Date startDate;
 
 @Column(name="OFFICELOCATION")
+@ApiModelProperty("Office location of Employee")
+
 private String officeLocation;
 
 

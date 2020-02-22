@@ -26,6 +26,7 @@ public class GlobalExceptionHandler {
 		logger.error("SQLException Occured:: URL=" + request.getRequestURL());
 		return "database_error";
 	}
+	
 
 	
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
