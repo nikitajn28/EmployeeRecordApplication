@@ -74,15 +74,19 @@ public class EmployeeController {
 	public ResponseEntity<?> deleteRecord(@PathVariable Long id) {
 		if (repo.findById(id).isPresent()) {
 			repo.deleteById(id);
+			LOG.info("Employee deleted succesfully");
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} else
+			LOG.error("Employee by %Sid not found");
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping(value = "/searchEmployees")
 	public ResponseEntity<List<Employee>> searchRecord(@RequestParam("startDate") String startDate,
 			@RequestParam("salary") BigDecimal salary) throws ParseException {
+		LOG.info("searchRecord service called");
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+		LOG.info("Succesfully fetched employee list with Startdate greter than %SstartDate and salary greater than %Ssalary");
 		return new ResponseEntity<List<Employee>>(repo.getEmployees(date, salary), HttpStatus.OK);
 
 	}
