@@ -18,14 +18,14 @@ public class LuckyDraw {
 
 	
 @Id
-@Column(name = "SEQUENCENO")
+@Column(name = "LuckyDrawNumber")
 @GeneratedValue(strategy = GenerationType.AUTO)
 private Long LuckyDrawNumber;
 
 @Column(name="LUCKYDRAWDATE")
 private Date luckyDrawDate;
 
-@Column(name="ID")
+@Column(name="WINNER_EMPID")
 private long id;
 
 public Long getLuckyDrawNumber() {
@@ -44,8 +44,7 @@ public void setLuckyDrawDate(Date luckyDrawDate) {
 	this.luckyDrawDate = luckyDrawDate;
 }
 
-@OneToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "ID")
+
 public long getId() {
 	return id;
 }

@@ -23,7 +23,6 @@ public class Employee {
 @Column(name = "ID")
 @GeneratedValue(strategy = GenerationType.AUTO)
 @ApiModelProperty("The database generated product ID")
-
 private Long Id;
 
 @Column(name="FIRSTNAME")
@@ -32,7 +31,6 @@ private String firstName;
 
 @Column(name="LASTNAME")
 @ApiModelProperty("Last Name of Employee")
-
 private String lastName;
 
 @Column(name="DEPARTMENT")

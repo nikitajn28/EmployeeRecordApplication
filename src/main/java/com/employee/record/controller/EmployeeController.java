@@ -42,16 +42,18 @@ public class EmployeeController {
 	@Autowired 
 	private LuckyDrawService service;
 	/** Create LoggerFactory for UpdateAddressCommandHandler. */
+	
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
-	  @ApiOperation(value = "View a list of available employees",response = List.class)
+	@ApiOperation(value = "View a list of available employees",response = List.class)
 	    @ApiResponses(value = {
 	            @ApiResponse(code = 200, message = "Successfully retrieved list"),
 	            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 	            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	    })
+	
 	@GetMapping(value = "/list")
-	public ResponseEntity<List<Employee>> readAllRecord() {
+	public ResponseEntity<List<Employee>> getAllEmployees() {
 		LOG.info("getEmployees/list service called");
 
 		List<Employee> empList = (List<Employee>) repo.findAll();
@@ -60,7 +62,8 @@ public class EmployeeController {
 
 		return new ResponseEntity<List<Employee>>(empList, HttpStatus.OK);
 	}
-	    @ApiOperation(value = "Add a Employee")
+	
+	@ApiOperation(value = "Add a Employee")
 	@PostMapping(value = "/add")
 	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee emp) {
 		LOG.info("add Employee service called");
@@ -73,52 +76,52 @@ public class EmployeeController {
 
 		return new ResponseEntity<Employee>(e, HttpStatus.CREATED);
 	}
-	    @ApiOperation(value = "Update employee")
+	
+	@ApiOperation(value = "Update employee")
 	@PutMapping(value = "/update/{id}")
-	public ResponseEntity<?> addEmployee(@Valid @PathVariable Long id, @RequestBody Employee emp) {
+	public ResponseEntity<?> updateEmployee(@Valid @PathVariable Long id, @RequestBody Employee emp) {
 		if (repo.findById(id).isPresent()) {
-			repo.save(emp);
+			Employee e =repo.save(emp);
 			LOG.info("Employee updated succesfully");
-			return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<Employee>(e,HttpStatus.ACCEPTED);
 		} else {
-			LOG.error("Employee by %Sid not found", id);
+			LOG.error("Employee by %s id not found", id);
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 
 		}
 	}
-	    @ApiOperation(value = "Delete employee")
+	
+    @ApiOperation(value = "Delete employee")
 	@DeleteMapping(value = "/delete/{id}")
-	public ResponseEntity<?> deleteRecord(@PathVariable Long id) {
+	public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 		if (repo.findById(id).isPresent()) {
 			repo.deleteById(id);
 			LOG.info("Employee deleted succesfully");
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} else
-			LOG.error("Employee by %Sid not found");
+			LOG.error("Employee by %s id not found");
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 	}
-	    @ApiOperation(value = "Search employee on basis of startdate and salary")
+    
+	@ApiOperation(value = "Search employee on basis of startdate and salary")
 	@GetMapping(value = "/search")
-	public ResponseEntity<List<Employee>> searchRecord(@RequestParam("startDate") String startDate,
+	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam("startDate") String startDate,
 			@RequestParam("salary") BigDecimal salary) throws ParseException {
-		LOG.info("searchRecord service called");
+		LOG.info("searchEmployees service called");
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+		LOG.debug("searchEmployees on basis of %s startdate and %s salary", startDate, salary);
 		return new ResponseEntity<List<Employee>>(repo.getEmployees(date, salary), HttpStatus.OK);
 
 	}
-	    @ApiOperation(value = "update employee of particular department & update their location")
+	
+	@ApiOperation(value = "update location of employees of particular department")
 	@PutMapping(value = "/update/employees")
-	public ResponseEntity<String> searchRecord(@RequestParam("officeLocation") String officeLocation,
+	public ResponseEntity<String> updateEmployees(@RequestParam("officeLocation") String officeLocation,
 			@RequestParam("department") String department) {
+		LOG.info("updateEmployees service called");
 		int recordsUpdate = repo.updateLocation(officeLocation, department);
-
+		LOG.debug("update location to %s of employees of %s  department", officeLocation, department);
 		return new ResponseEntity<String>("Numbe of records updated :" + recordsUpdate, HttpStatus.OK);
-
 	}
 	
-	@GetMapping(value= "/luckyDraw")
-	public ResponseEntity<Employee> luckyEmployee(){
-		return new ResponseEntity<Employee>( service.getWinner(),HttpStatus.OK);
-		
-	}
 }

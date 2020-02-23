@@ -4,6 +4,6 @@ import com.employee.record.model.Employee;
 
 public interface LuckyDrawService {
 	
-	Employee getWinner();
+	void getWinner();
 
 }
