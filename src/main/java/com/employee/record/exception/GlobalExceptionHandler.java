@@ -22,25 +22,25 @@ public class GlobalExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	@ExceptionHandler(SQLException.class)
-	public String handleSQLException(HttpServletRequest request, Exception ex) {
+	public ResponseEntity<ResponseError> handleSQLException(HttpServletRequest request, Exception e) {
 		logger.error("SQLException Occured:: URL=" + request.getRequestURL());
-		return "database_error";
+		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.EXPECTATION_FAILED,"SQL Execption",e.getCause().getMessage()), HttpStatus.EXPECTATION_FAILED);
 	}
 	
 
 	
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ResponseEntity<String> handleBadInputException(Exception e) {
+	public ResponseEntity<ResponseError> handleBadInputException(Exception e) {
 		logger.error("IOException handler executed");
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.METHOD_NOT_ALLOWED,e.getMessage(),e.getCause().getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@ExceptionHandler(value = { IllegalArgumentException.class, IllegalStateException.class })
-	protected ResponseEntity<String> handleConflict(RuntimeException ex, WebRequest request) {
+	protected ResponseEntity<ResponseError> handleConflict(RuntimeException e, WebRequest request) {
 		String bodyOfResponse = "This should be application specific";
-		logger.error(ex.getCause().getMessage());
+		logger.error(e.getCause().getMessage());
 
-		return new ResponseEntity<>(bodyOfResponse, HttpStatus.CONFLICT);
+		return new ResponseEntity<ResponseError>(new ResponseError(HttpStatus.CONFLICT,bodyOfResponse,e.getCause().getMessage()), HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ResourceAccessException.class)

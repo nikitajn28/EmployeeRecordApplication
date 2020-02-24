@@ -17,24 +17,13 @@ import javax.persistence.Table;
 public class LuckyDraw {
 
 	
-@Id
-@Column(name = "LuckyDrawNumber")
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long LuckyDrawNumber;
 
+@Id
 @Column(name="LUCKYDRAWDATE")
 private Date luckyDrawDate;
 
 @Column(name="WINNER_EMPID")
 private long id;
-
-public Long getLuckyDrawNumber() {
-	return LuckyDrawNumber;
-}
-
-public void setLuckyDrawNumber(Long luckyDrawNumber) {
-	LuckyDrawNumber = luckyDrawNumber;
-}
 
 public Date getLuckyDrawDate() {
 	return luckyDrawDate;

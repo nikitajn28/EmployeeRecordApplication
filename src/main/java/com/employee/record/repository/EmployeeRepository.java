@@ -13,6 +13,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.employee.record.model.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long>,EmployeeRepositoryCustom {
+
+	
 	/*
 	
  */

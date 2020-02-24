@@ -2,7 +2,6 @@ package com.employee.record.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,51 +10,191 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name="Employee")
-@ApiModel("Employee")
 public class Employee {
 
 @Id
 @Column(name = "ID")
-@GeneratedValue(strategy = GenerationType.AUTO)
-@ApiModelProperty("The database generated product ID")
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long Id;
 
 @Column(name="FIRSTNAME")
-@ApiModelProperty("First Name of Employee")
 private String firstName;
 
 @Column(name="LASTNAME")
-@ApiModelProperty("Last Name of Employee")
 private String lastName;
 
 @Column(name="DEPARTMENT")
-@ApiModelProperty("Deparment Name of Employee")
 private String department;
 
 @Column(name="SALARY")
-@ApiModelProperty("Salary Name of Employee")
 
 private BigDecimal salary;
 
 @Column(name="STARTDATE")
-@ApiModelProperty("Start date of Employee")
 private Date startDate;
 
 @Column(name="OFFICELOCATION")
-@ApiModelProperty("Office location of Employee")
 
 private String officeLocation;
+
+public Employee() {
+	super();
+}
+
+
+public Employee(Long id, String firstName, String lastName, String department, BigDecimal salary, Date startDate,
+		String officeLocation) {
+	super();
+	Id = id;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.department = department;
+	this.salary = salary;
+	this.startDate = startDate;
+	this.officeLocation = officeLocation;
+}
+
+
+
+
+public Employee( String firstName, String lastName, String department, BigDecimal salary, Date startDate,
+		String officeLocation) {
+	super();
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.department = department;
+	this.salary = salary;
+	this.startDate = startDate;
+	this.officeLocation = officeLocation;
+}
+
+
+public Long getId() {
+	return Id;
+}
+
+
+
+
+public void setId(Long id) {
+	Id = id;
+}
+
+
+
+
+public String getFirstName() {
+	return firstName;
+}
+
+
+
+
+public void setFirstName(String firstName) {
+	this.firstName = firstName;
+}
+
+
+
+
+public String getLastName() {
+	return lastName;
+}
+
+
+
+
+public void setLastName(String lastName) {
+	this.lastName = lastName;
+}
+
+
+
+
+public String getDepartment() {
+	return department;
+}
+
+
+
+
+public void setDepartment(String department) {
+	this.department = department;
+}
+
+
+
+
+public BigDecimal getSalary() {
+	return salary;
+}
+
+
+
+
+public void setSalary(BigDecimal salary) {
+	this.salary = salary;
+}
+
+
+
+
+public Date getStartDate() {
+	return startDate;
+}
+
+
+
+
+public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+}
+
+
+
+
+public String getOfficeLocation() {
+	return officeLocation;
+}
+
+
+
+
+public void setOfficeLocation(String officeLocation) {
+	this.officeLocation = officeLocation;
+}
+
+
+
+
+@Override
+public String toString() {
+	return "Employee [Id=" + Id + ", firstName=" + firstName + ", lastName=" + lastName + ", department=" + department
+			+ ", salary=" + salary + ", startDate=" + startDate + ", officeLocation=" + officeLocation + "]";
+}
+
+
 
 
 @Override
 public int hashCode() {
-	return Objects.hash(Id, department, firstName, lastName, officeLocation, salary, startDate);
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+	result = prime * result + ((department == null) ? 0 : department.hashCode());
+	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+	result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+	result = prime * result + ((officeLocation == null) ? 0 : officeLocation.hashCode());
+	result = prime * result + ((salary == null) ? 0 : salary.hashCode());
+	result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+	return result;
 }
+
+
+
 
 @Override
 public boolean equals(Object obj) {
@@ -66,91 +205,49 @@ public boolean equals(Object obj) {
 	if (getClass() != obj.getClass())
 		return false;
 	Employee other = (Employee) obj;
-	return Objects.equals(Id, other.Id) && Objects.equals(department, other.department)
-			&& Objects.equals(firstName, other.firstName)
-			&& Objects.equals(lastName, other.lastName)
-			&& Objects.equals(officeLocation, other.officeLocation) && Objects.equals(salary, other.salary)
-			&& Objects.equals(startDate, other.startDate);
+	if (Id == null) {
+		if (other.Id != null)
+			return false;
+	} else if (!Id.equals(other.Id))
+		return false;
+	if (department == null) {
+		if (other.department != null)
+			return false;
+	} else if (!department.equals(other.department))
+		return false;
+	if (firstName == null) {
+		if (other.firstName != null)
+			return false;
+	} else if (!firstName.equals(other.firstName))
+		return false;
+	if (lastName == null) {
+		if (other.lastName != null)
+			return false;
+	} else if (!lastName.equals(other.lastName))
+		return false;
+	if (officeLocation == null) {
+		if (other.officeLocation != null)
+			return false;
+	} else if (!officeLocation.equals(other.officeLocation))
+		return false;
+	if (salary == null) {
+		if (other.salary != null)
+			return false;
+	} else if (!salary.equals(other.salary))
+		return false;
+	if (startDate == null) {
+		if (other.startDate != null)
+			return false;
+	} else if (!startDate.equals(other.startDate))
+		return false;
+	return true;
 }
 
-public Employee() {
-	super();
-}
 
-public Employee(Long employeeId, String employeeFirstName, String employeeLastName, String department,
-		BigDecimal salary, Date startDate, String officeLocaion) {
-	super();
-	this.Id = employeeId;
-	this.firstName = employeeFirstName;
-	this.lastName = employeeLastName;
-	this.department = department;
-	this.salary = salary;
-	this.startDate=startDate;
-	this.officeLocation=officeLocaion;
-}
 
-public Long getEmployeeId() {
-	return Id;
-}
 
-public void setEmployeeId(Long employeeId) {
-	this.Id = employeeId;
-}
 
-public String getEmployeeFirstName() {
-	return firstName;
-}
 
-public void setEmployeeFirstName(String employeeFirstName) {
-	this.firstName = employeeFirstName;
-}
-
-public String getEmployeeLastName() {
-	return lastName;
-}
-
-public void setEmployeeLastName(String employeeLastName) {
-	this.lastName = employeeLastName;
-}
-
-public String getDepartment() {
-	return department;
-}
-
-public void setDepartment(String department) {
-	this.department = department;
-}
-
-public BigDecimal getSalary() {
-	return salary;
-}
-
-public void setSalary(BigDecimal salary) {
-	this.salary = salary;
-}
-
-public Date getStartDate() {
-	return startDate;
-}
-
-public void setStartDate(Date startDate) {
-	this.startDate = startDate;
-}
-
-public String getOfficeLocation() {
-	return officeLocation;
-}
-
-public void setOfficeLocation(String officeLocation) {
-	this.officeLocation = officeLocation;
-}
-
-@Override
-public String toString() {
-	return "Employee [employeeId=" + Id + ", name=" + firstName
-			+ lastName + ", department=" + department + ", salary=" + salary + ", startDate=" + startDate
-			+ ", officeLocation=" + officeLocation + "]";
-}
 
 
 

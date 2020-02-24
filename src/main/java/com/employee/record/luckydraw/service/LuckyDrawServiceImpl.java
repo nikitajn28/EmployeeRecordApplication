@@ -31,13 +31,14 @@ public class LuckyDrawServiceImpl implements LuckyDrawService {
 	//The following tasks are scheduled to be executed at 4:45 AM on the 10th day of every month:
 	@Scheduled(cron = "0 45 4 10 * ?")
 	public void getWinner() {
+		LOG.info("******************Lucky Draw Started");
 		List<Employee> employeeList = repo.findAll();
 		rand = new Random();
 		Employee e = employeeList.get(rand.nextInt(employeeList.size()));
 		LuckyDraw luck = new LuckyDraw();
 		Date date = new Date(System.currentTimeMillis());
 		luck.setLuckyDrawDate(date); // Gets the current date and time
-		luck.setId(e.getEmployeeId());
+		luck.setId(e.getId());
 		luckyDrawRepo.save(luck);
 	LOG.debug("Inside getWinner ..Winner Employee is %s",e);
 	}
